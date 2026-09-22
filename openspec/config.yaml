@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  Projeto: SyncTempo API, uma API REST para calendarios individuais e colaborativos.
+  Stack: Java 21, Spring Boot 4.1.1, Spring MVC, Spring Data JPA, PostgreSQL e Flyway.
+  Persistencia: migrations SQL em src/main/resources/db/migration; o Hibernate usa ddl-auto=validate.
+  Organizacao: codigo em src/main/java, testes em src/test/java, documentacao em docs/.
+  Validacao local: ./mvnw test; para infraestrutura, docker compose config e docker compose up --build.
+  Convencoes: nomes de classes e metodos em ingles conforme o codigo existente; documentacao e propostas em portugues do Brasil.
+  Seguranca: nunca registrar ou versionar segredos; validar entradas; preservar isolamento e integridade dos dados.
+
+rules:
+  proposal:
+    - Explicitar objetivo, escopo, nao-escopo e impacto em dados ou compatibilidade.
+    - Registrar riscos de seguranca, migracao e rollback quando aplicavel.
+  design:
+    - Respeitar Spring Boot, JPA, PostgreSQL e Flyway existentes; evitar dependencias sem justificativa.
+    - Separar evidencia de testes e build de evidencia de Docker, banco e comportamento em runtime.
+  tasks:
+    - Incluir criterio de aceite e comando de verificacao em cada tarefa.
+    - Tratar alteracoes de banco como migrations aditivas, versionadas e rollback-aware.
+
+operations:
+  apply:
+    guidance:
+      - Executar ./mvnw test apos cada fatia relevante e registrar validacoes que dependem do Docker separadamente.
+      - Nao apagar dados, volumes ou migrations existentes sem autorizacao explicita.
+  archive:
+    guidance:
+      - Arquivar somente mudancas implementadas e verificadas; preservar o historico em openspec/changes/archive/.

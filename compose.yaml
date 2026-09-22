@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: synctempo-postgres
+    environment:
+      POSTGRES_DB: synctempo
+      POSTGRES_USER: synctempo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no arquivo .env local}
+    ports:
+      - "5434:5432"
+    volumes:
+      - synctempo-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U synctempo -d synctempo"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/synctempo
+      DATABASE_USERNAME: synctempo
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no arquivo .env local}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  synctempo-postgres-data:
