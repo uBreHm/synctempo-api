@@ -1,4 +1,4 @@
-package br.com.synctempo.domain.model;
+package br.com.synctempo.domain.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,6 +53,27 @@ public class Calendario {
     private LocalDateTime atualizadoEm;
 
     protected Calendario() {
+    }
+
+    public static Calendario criar(String nome, String descricao, String cor, Usuario criador) {
+        Calendario calendario = new Calendario();
+        calendario.nome = nome.strip();
+        calendario.descricao = descricao == null ? null : descricao.strip();
+        calendario.cor = cor;
+        calendario.criadoPor = criador;
+        return calendario;
+    }
+
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getDescricao() { return descricao; }
+    public String getCor() { return cor; }
+    public Usuario getCriadoPor() { return criadoPor; }
+
+    public void atualizar(String nome, String descricao, String cor) {
+        this.nome = nome.strip();
+        this.descricao = descricao == null ? null : descricao.strip();
+        this.cor = cor;
     }
 
     @PrePersist

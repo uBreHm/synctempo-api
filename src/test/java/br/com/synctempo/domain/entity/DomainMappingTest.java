@@ -1,4 +1,4 @@
-package br.com.synctempo.domain.model;
+package br.com.synctempo.domain.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

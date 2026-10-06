@@ -1,4 +1,4 @@
-package br.com.synctempo.domain.model;
+package br.com.synctempo.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +35,23 @@ public class Categoria {
 
     protected Categoria() {
     }
+
+    public static Categoria criar(Calendario calendario, String nome, String cor) {
+        Categoria categoria = new Categoria();
+        categoria.calendario = calendario;
+        categoria.nome = nome.strip();
+        categoria.cor = cor;
+        return categoria;
+    }
+
+    public void atualizar(String nome, String cor) {
+        this.nome = nome.strip();
+        this.cor = cor;
+    }
+
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getCor() { return cor; }
 
     @PrePersist
     void prepararInclusao() {

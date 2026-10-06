@@ -1,4 +1,4 @@
-package br.com.synctempo.domain.model;
+package br.com.synctempo.domain.entity;
 
 import br.com.synctempo.domain.enums.PapelCalendario;
 import jakarta.persistence.Column;
@@ -39,6 +39,14 @@ public class MembroCalendario {
     private LocalDateTime entrouEm;
 
     protected MembroCalendario() {
+    }
+
+    public static MembroCalendario administrador(Calendario calendario, Usuario usuario) {
+        MembroCalendario membro = new MembroCalendario();
+        membro.calendario = calendario;
+        membro.usuario = usuario;
+        membro.papel = PapelCalendario.ADMIN;
+        return membro;
     }
 
     @PrePersist

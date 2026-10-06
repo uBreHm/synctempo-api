@@ -3,4 +3,7 @@
 .vscode
 target
 .env
+.env.*
+*.pem
+*.key
 README.md

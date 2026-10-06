@@ -1,4 +1,4 @@
-package br.com.synctempo.domain.model;
+package br.com.synctempo.domain.entity;
 
 import br.com.synctempo.domain.enums.Visibilidade;
 import jakarta.persistence.Column;

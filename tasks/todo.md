@@ -8,6 +8,8 @@
 
 ## Próxima etapa: CRUDs básicos
 
-- [ ] DTOs e validações de Usuario, Calendario e Categoria.
-- [ ] Repositories, services e controllers.
-- [ ] Tratamento padronizado de exceções.
+- [x] DTOs e validações de Usuario, Calendario e Categoria.
+- [x] Repositories, services e controllers desses três recursos.
+- [x] Tratamento padronizado de erros HTTP conhecidos.
+- [x] Exigir participação e papel nos serviços de calendário e categoria.
+- [ ] Criar serviços de membros e eventos; aplicar autorização e preservar o último ADMIN.
