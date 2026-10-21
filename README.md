@@ -5,7 +5,7 @@ API REST para calendários individuais e colaborativos. O projeto contém a fund
 ## Pré-requisitos
 
 - Docker Desktop ou Docker Engine com Docker Compose.
-- JDK 21 para compilar ou executar fora do Docker.
+- JDK 21 para compilar ou executar fora do Docker
 
 ## Executar pelo VS Code com Docker
 
