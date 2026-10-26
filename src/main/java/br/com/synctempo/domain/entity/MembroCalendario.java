@@ -49,6 +49,32 @@ public class MembroCalendario {
         return membro;
     }
 
+    public static MembroCalendario criar(Calendario calendario, Usuario usuario, PapelCalendario papel) {
+        MembroCalendario membro = new MembroCalendario();
+        membro.calendario = calendario;
+        membro.usuario = usuario;
+        membro.papel = papel;
+        return membro;
+    }
+
+    public Long getId() { return id; }
+    public Calendario getCalendario() { return calendario; }
+    public Usuario getUsuario() { return usuario; }
+    public PapelCalendario getPapel() { return papel; }
+    public LocalDateTime getEntrouEm() { return entrouEm; }
+
+    public void alterarPapel(PapelCalendario papel) {
+        this.papel = papel;
+    }
+
+    public boolean isAdmin() {
+        return papel == PapelCalendario.ADMIN;
+    }
+
+    public boolean podeCriarEventos() {
+        return papel == PapelCalendario.ADMIN || papel == PapelCalendario.EDITOR;
+    }
+
     @PrePersist
     void prepararInclusao() {
         entrouEm = LocalDateTime.now();

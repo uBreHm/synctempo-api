@@ -78,6 +78,47 @@ public class Evento {
     protected Evento() {
     }
 
+    public static Evento criar(Calendario calendario, Usuario criador) {
+        Evento evento = new Evento();
+        evento.calendario = calendario;
+        evento.criadoPor = criador;
+        return evento;
+    }
+
+    public void atualizar(String titulo, String descricao, String localizacao, String linkReuniao,
+            LocalDate dataEvento, LocalTime horaInicio, LocalTime horaFim, boolean diaInteiro,
+            Visibilidade visibilidade, Set<Categoria> categorias) {
+        this.titulo = titulo.strip();
+        this.descricao = descricao == null ? null : descricao.strip();
+        this.localizacao = localizacao == null ? null : localizacao.strip();
+        this.linkReuniao = linkReuniao == null ? null : linkReuniao.strip();
+        this.dataEvento = dataEvento;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+        this.diaInteiro = diaInteiro;
+        this.visibilidade = visibilidade;
+        this.categorias.clear();
+        this.categorias.addAll(categorias);
+    }
+
+    public Long getId() { return id; }
+    public Calendario getCalendario() { return calendario; }
+    public Usuario getCriadoPor() { return criadoPor; }
+    public String getTitulo() { return titulo; }
+    public String getDescricao() { return descricao; }
+    public String getLocalizacao() { return localizacao; }
+    public String getLinkReuniao() { return linkReuniao; }
+    public LocalDate getDataEvento() { return dataEvento; }
+    public LocalTime getHoraInicio() { return horaInicio; }
+    public LocalTime getHoraFim() { return horaFim; }
+    public boolean isDiaInteiro() { return diaInteiro; }
+    public Visibilidade getVisibilidade() { return visibilidade; }
+    public Set<Categoria> getCategorias() { return categorias; }
+
+    public boolean isSomenteOcupado() {
+        return visibilidade == Visibilidade.SOMENTE_OCUPADO;
+    }
+
     @PrePersist
     void prepararInclusao() {
         validarHorario();

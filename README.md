@@ -44,6 +44,17 @@ Essa opção não altera o contexto global nem remove volumes existentes.
 
 Configure as variáveis `DATABASE_URL`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` e `JWT_SECRET_BASE64` no ambiente da IDE e execute `mvn test` ou `mvn spring-boot:run`. O Hibernate está em modo `validate`: somente as migrations criam ou alteram tabelas. O valor JWT precisa conter ao menos 32 bytes após decodificação Base64.
 
+## Credenciais
+
+Nenhuma senha fica no repositório; todas vêm do `.env` local.
+
+| Acesso | Credencial |
+| --- | --- |
+| PostgreSQL | Banco e usuário `synctempo`, senha `POSTGRES_PASSWORD`. Fora do Docker use `localhost:5434`; dentro dele, `postgres:5432`. |
+| pgAdmin | `PGADMIN_DEFAULT_EMAIL` e `PGADMIN_DEFAULT_PASSWORD` do `.env.pgadmin`. |
+| Administrador do sistema (`ADMIN_SISTEMA`) | `ADMIN_EMAIL` e `ADMIN_PASSWORD` do `.env`. A conta é criada na inicialização quando as duas variáveis estão definidas e o e-mail ainda não existe; a senha deve ter de 12 a 72 caracteres. O `.env.example` sugere `admin@synctempo.local`. |
+| Contas comuns | Crie com `POST /auth/register` e entre com `POST /auth/login`. |
+
 ## Autenticação
 
 | Método e rota | Acesso | Corpo ou resultado |
@@ -78,6 +89,96 @@ Todas as rotas abaixo exigem `Authorization: Bearer <token>`. As respostas de li
 | `POST /calendarios/{id}/categorias`, `PUT /calendarios/{id}/categorias/{categoriaId}`, `DELETE /calendarios/{id}/categorias/{categoriaId}` | Alterar categorias; exige ADMIN ou EDITOR. |
 
 Calendários aceitam `nome`, `descricao` opcional e `cor` no formato `#RRGGBB`. Categorias aceitam `nome` e `cor`. As rotas `PUT` recebem o objeto completo. Respostas de erro usam `code` e `message` sem incluir detalhes internos.
+
+## Membros, eventos e administração
+
+Todas as rotas abaixo exigem `Authorization: Bearer <token>`. As listas seguem a mesma paginação dos CRUDs básicos.
+
+| Método e rota | Regra |
+| --- | --- |
+| `GET /usuarios/me/calendarios` | Listar os calendários da conta com o papel em cada um. |
+| `GET /calendarios/{id}/membros?busca=`, `GET /calendarios/{id}/membros/{membroId}` | Consultar membros e papéis, com busca por nome ou e-mail; exige participação. |
+| `POST /calendarios/{id}/membros` | Adicionar uma conta ativa pelo `email`, com `papel` `ADMIN`, `EDITOR` ou `LEITOR`; exige ADMIN. |
+| `PUT /calendarios/{id}/membros/{membroId}`, `DELETE /calendarios/{id}/membros/{membroId}` | Alterar o papel ou remover o membro; exige ADMIN. |
+| `GET /calendarios/{id}/eventos`, `GET /calendarios/{id}/eventos/{eventoId}` | Consultar eventos ordenados por data e horário; exige participação. |
+| `POST /calendarios/{id}/eventos`, `PUT /calendarios/{id}/eventos/{eventoId}`, `DELETE /calendarios/{id}/eventos/{eventoId}` | Alterar eventos; exige ADMIN ou EDITOR. |
+| `GET /admin/usuarios`, `PATCH /admin/usuarios/{id}/ativar` | Listar contas e reativar uma conta desativada; exige perfil `ADMIN_SISTEMA`. |
+
+- Uma conta participa uma única vez de cada calendário, e o último ADMIN não pode ser rebaixado nem removido (HTTP 409).
+- O evento ocorre em um único dia. Com `diaInteiro` verdadeiro, não tem horário; caso contrário, exige `horaInicio` e `horaFim`, com o fim depois do início.
+- Eventos recebem `categoriaIds` somente do próprio calendário.
+- Eventos com `visibilidade` `SOMENTE_OCUPADO` aparecem para os demais membros apenas com data, horário e o título "Ocupado"; o criador vê todos os detalhes.
+
+## Exemplos de request e response
+
+Cadastro e login (`POST /auth/register` e `POST /auth/login`):
+
+```json
+{"name": "Maria Souza", "email": "maria@example.com", "password": "senha-da-maria-123"}
+```
+
+```json
+{"id": 2, "name": "Maria Souza", "email": "maria@example.com"}
+```
+
+```json
+{"token": "eyJhbGciOiJIUzI1NiJ9...", "tokenType": "Bearer", "expiresAt": "2026-10-23T04:28:16.941834160Z"}
+```
+
+Criar calendário (`POST /calendarios`) e listar os calendários da conta (`GET /usuarios/me/calendarios`):
+
+```json
+{"nome": "TCC 2026", "descricao": "Agenda do grupo de TCC", "cor": "#3366FF"}
+```
+
+```json
+{"id": 1, "nome": "TCC 2026", "descricao": "Agenda do grupo de TCC", "cor": "#3366FF", "criadoPorId": 2}
+```
+
+```json
+{"data": [{"calendarioId": 1, "nome": "TCC 2026", "descricao": "Agenda do grupo de TCC", "cor": "#3366FF", "papel": "ADMIN"}], "page": 0, "size": 20, "totalItems": 1, "totalPages": 1}
+```
+
+Adicionar membro (`POST /calendarios/1/membros`):
+
+```json
+{"email": "joao@example.com", "papel": "LEITOR"}
+```
+
+```json
+{"id": 2, "usuarioId": 3, "nome": "Joao Lima", "email": "joao@example.com", "papel": "LEITOR", "entrouEm": "2026-10-23T01:13:19.33347196"}
+```
+
+Criar categoria (`POST /calendarios/1/categorias`) e evento (`POST /calendarios/1/eventos`):
+
+```json
+{"nome": "Reuniao", "cor": "#FF9900"}
+```
+
+```json
+{"titulo": "Reuniao com o orientador", "descricao": "Revisar a modelagem", "localizacao": "Sala 12", "linkReuniao": "https://meet.example.com/tcc", "dataEvento": "2026-10-27", "horaInicio": "19:00", "horaFim": "20:30", "diaInteiro": false, "visibilidade": "DETALHADA", "categoriaIds": [1]}
+```
+
+```json
+{"id": 1, "calendarioId": 1, "criadoPorId": 2, "titulo": "Reuniao com o orientador", "descricao": "Revisar a modelagem", "localizacao": "Sala 12", "linkReuniao": "https://meet.example.com/tcc", "dataEvento": "2026-10-27", "horaInicio": "19:00:00", "horaFim": "20:30:00", "diaInteiro": false, "visibilidade": "DETALHADA", "categorias": [{"id": 1, "nome": "Reuniao", "cor": "#FF9900"}]}
+```
+
+Evento `SOMENTE_OCUPADO` consultado por outro membro (`GET /calendarios/1/eventos/2`):
+
+```json
+{"id": 2, "calendarioId": 1, "criadoPorId": 2, "titulo": "Ocupado", "descricao": null, "localizacao": null, "linkReuniao": null, "dataEvento": "2026-10-28", "horaInicio": "09:00:00", "horaFim": "10:00:00", "diaInteiro": false, "visibilidade": "SOMENTE_OCUPADO", "categorias": []}
+```
+
+Erros:
+
+| Situação | Status | Corpo |
+| --- | --- | --- |
+| Campo obrigatório ausente | 400 | `{"code": "BAD_REQUEST", "message": "Dados invalidos"}` |
+| Horário do evento inválido | 400 | `{"code": "BAD_REQUEST", "message": "Evento deve ser de dia inteiro sem horario ou ter horario valido"}` |
+| Sem token ou token inválido | 401 | `{"code": "UNAUTHORIZED", "message": "Autenticacao obrigatoria"}` |
+| Papel insuficiente no calendário | 403 | `{"code": "FORBIDDEN", "message": "Acesso negado"}` |
+| Rota inexistente | 404 | `{"code": "NOT_FOUND", "message": "Requisicao nao concluida"}` |
+| Rebaixar ou remover o último ADMIN | 409 | `{"code": "CONFLICT", "message": "O calendario precisa de pelo menos um ADMIN"}` |
 
 ## Especificações com OpenSpec
 
@@ -114,6 +215,12 @@ src/main/java/br/com/synctempo/categoria
   CRUD de categorias; dto/request e dto/response
 src/main/java/br/com/synctempo/usuario
   Operações da própria conta; dto/request e dto/response
+src/main/java/br/com/synctempo/membro
+  CRUD de membros e calendários da conta; dto/request e dto/response
+src/main/java/br/com/synctempo/evento
+  CRUD de eventos; dto/request e dto/response
+src/main/java/br/com/synctempo/admin
+  Administração de contas e administrador inicial; dto/response
 src/main/java/br/com/synctempo/api
   Erros e configuração OpenAPI; dto/response para o erro público
 src/main/java/br/com/synctempo/security
@@ -147,6 +254,3 @@ Os DTOs ficam próximos da funcionalidade que define cada contrato HTTP. `Usuari
 
 Consulte [o modelo de domínio](docs/modelo-de-dominio.md) e [o planejamento](docs/planejamento-cruds-basicos.md) antes de expandir a API.
 
-## Próximas etapas
-
-Os próximos incrementos criam os serviços de membros e eventos. O membro ADMIN criador já é criado automaticamente; a troca de administradores e a regra de categorias do mesmo calendário para eventos dependem desses serviços.

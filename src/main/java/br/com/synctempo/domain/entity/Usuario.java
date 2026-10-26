@@ -54,6 +54,12 @@ public class Usuario {
         return usuario;
     }
 
+    public static Usuario cadastrarAdministrador(String nome, String email, String senhaHash) {
+        Usuario usuario = cadastrar(nome, email, senhaHash);
+        usuario.perfil = PerfilGlobal.ADMIN_SISTEMA;
+        return usuario;
+    }
+
     public Long getId() {
         return id;
     }
@@ -85,6 +91,10 @@ public class Usuario {
 
     public void alterarSenha(String senhaHash) {
         this.senhaHash = senhaHash;
+    }
+
+    public void ativar() {
+        this.ativo = true;
     }
 
     public void desativar() {
