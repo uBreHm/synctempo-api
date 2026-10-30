@@ -1,0 +1,60 @@
+/* A cor do calendário aparece só no filete à esquerda; o texto fica sempre
+   em --texto sobre fundo cinza claro, qualquer que seja a cor escolhida. */
+
+.bloco,
+.blocoDiaInteiro {
+  border: 1px solid var(--fundo);
+  border-left: 3px solid var(--cor-calendario);
+  background: var(--fundo-evento);
+  font-size: var(--tamanho-p);
+  line-height: 1.3;
+  text-align: left;
+  overflow: hidden;
+}
+
+.bloco:hover,
+.blocoDiaInteiro:hover {
+  background: var(--linha);
+}
+
+.bloco:focus-visible,
+.blocoDiaInteiro:focus-visible {
+  outline-offset: 0;
+}
+
+.bloco {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1px var(--espaco-1) 1px 6px;
+}
+
+.bloco:focus-visible {
+  z-index: 2;
+}
+
+.blocoDiaInteiro {
+  display: flex;
+  width: 100%;
+  min-height: 22px;
+  align-items: center;
+  padding: 1px var(--espaco-1) 1px 6px;
+}
+
+.titulo {
+  max-width: 100%;
+  overflow: hidden;
+  font-weight: var(--peso-forte);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.horario {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--texto-secundario);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

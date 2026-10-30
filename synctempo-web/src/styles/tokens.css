@@ -1,0 +1,33 @@
+:root {
+  /* Paleta: fundo claro, texto quase preto, cinzas para a grade e uma cor de destaque. */
+  --fundo: #ffffff;
+  --fundo-suave: #f4f4f4;
+  --fundo-evento: #ececec;
+  --texto: #111111;
+  --texto-secundario: #5c5c5c; /* 6,9:1 sobre --fundo */
+  --linha: #dddddd; /* divisórias da grade */
+  --linha-controle: #8a8a8a; /* bordas de campos, 3,5:1 sobre --fundo */
+  --destaque: #0f6b5c; /* 6,4:1 com --fundo */
+  --destaque-suave: #e3efec;
+  --sobre-destaque: #ffffff;
+  --veu: rgb(17 17 17 / 0.45);
+
+  /* Tipografia: uma família, três tamanhos, dois pesos. */
+  --fonte: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --tamanho-p: 12px;
+  --tamanho-m: 14px;
+  --tamanho-g: 20px;
+  --peso-normal: 400;
+  --peso-forte: 600;
+
+  /* Espaçamento. */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-6: 24px;
+  --espaco-8: 32px;
+
+  /* Grade da agenda (a altura da hora vem de ALTURA_HORA em Grade.tsx). */
+  --largura-horas: 56px;
+}

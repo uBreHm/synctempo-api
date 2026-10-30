@@ -1,0 +1,38 @@
+.lateral {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--espaco-6);
+}
+
+.criarCalendario {
+  align-self: flex-start;
+}
+
+.estado {
+  padding: var(--espaco-6) var(--espaco-4);
+}
+
+/* As regiões role="status" ficam sempre na árvore (vazias quando não há o que dizer)
+   para que leitores de tela anunciem as mudanças. */
+.avisos {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--espaco-4);
+}
+
+.avisos > :not(:empty) {
+  margin-top: var(--espaco-2);
+}
+
+.avisos:has(> :not(:empty)) {
+  padding-bottom: var(--espaco-2);
+}
+
+.aviso {
+  font-weight: var(--peso-forte);
+}
+
+.situacao {
+  color: var(--texto-secundario);
+}

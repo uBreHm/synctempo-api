@@ -1,0 +1,40 @@
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--espaco-2);
+  padding: var(--espaco-1) 0;
+}
+
+.marcar {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-width: 0;
+  cursor: pointer;
+}
+
+.nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.papel {
+  grid-column: 1;
+  padding-left: 24px;
+  font-size: var(--tamanho-p);
+  color: var(--texto-secundario);
+}
+
+.configurar {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: var(--tamanho-p);
+}

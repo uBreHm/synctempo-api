@@ -1,0 +1,30 @@
+.tela {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 12vh var(--espaco-4) var(--espaco-8);
+}
+
+.marca {
+  font-size: var(--tamanho-g);
+  font-weight: var(--peso-forte);
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.formulario > button[type='submit'] {
+  align-self: flex-start;
+}
+
+.aviso {
+  padding: var(--espaco-3) var(--espaco-4);
+  border-left: 3px solid var(--destaque);
+  background: var(--destaque-suave);
+}

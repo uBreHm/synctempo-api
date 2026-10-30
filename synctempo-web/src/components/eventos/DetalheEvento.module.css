@@ -1,0 +1,42 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--espaco-2) var(--espaco-4);
+}
+
+.dados dt {
+  color: var(--texto-secundario);
+}
+
+.dados dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.descricao {
+  white-space: pre-wrap;
+}
+
+.amostra {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--cor-calendario);
+  vertical-align: -1px;
+}
+
+.secundario {
+  color: var(--texto-secundario);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
