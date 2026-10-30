@@ -1,0 +1,31 @@
+.dialogo {
+  width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+}
+
+.estreita {
+  max-width: 440px;
+}
+
+.larga {
+  max-width: 600px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-2) var(--espaco-2) var(--espaco-6);
+  border-bottom: 1px solid var(--linha);
+}
+
+.titulo {
+  padding-top: var(--espaco-2);
+  font-size: var(--tamanho-g);
+  overflow-wrap: anywhere;
+}
+
+.corpo {
+  padding: var(--espaco-4) var(--espaco-6) var(--espaco-6);
+}

@@ -1,0 +1,65 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espaco-3) var(--espaco-4);
+}
+
+.linha > * {
+  flex: 1 1 160px;
+}
+
+.linha > .marcador {
+  flex: none;
+  min-height: 36px;
+}
+
+.marcador {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  cursor: pointer;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.grupo legend {
+  margin-bottom: var(--espaco-2);
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2) var(--espaco-4);
+}
+
+.rotulo {
+  font-weight: var(--peso-forte);
+}
+
+.opcional {
+  font-weight: var(--peso-normal);
+  color: var(--texto-secundario);
+}
+
+.secundario {
+  font-size: var(--tamanho-p);
+  color: var(--texto-secundario);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  padding-top: var(--espaco-2);
+}

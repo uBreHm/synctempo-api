@@ -1,0 +1,25 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  min-width: 0;
+}
+
+.rotulo {
+  font-weight: var(--peso-forte);
+}
+
+.opcional {
+  font-weight: var(--peso-normal);
+  color: var(--texto-secundario);
+}
+
+.dica {
+  font-size: var(--tamanho-p);
+  color: var(--texto-secundario);
+}
+
+.erro {
+  font-size: var(--tamanho-p);
+  font-weight: var(--peso-forte);
+}

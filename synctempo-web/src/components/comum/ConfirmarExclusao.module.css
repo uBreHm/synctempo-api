@@ -1,0 +1,12 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  overflow-wrap: anywhere;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}

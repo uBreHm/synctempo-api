@@ -1,0 +1,159 @@
+.rolagem {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.linha {
+  display: grid;
+  grid-template-columns: var(--largura-horas) repeat(var(--dias), minmax(0, 1fr));
+}
+
+/* Cabeçalho e faixa de dia inteiro ficam dentro da área rolável (fixos no topo)
+   para as colunas continuarem alinhadas com a barra de rolagem. */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  border-bottom: 1px solid var(--linha);
+  background: var(--fundo);
+}
+
+.cabecalhoDia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: var(--espaco-2) 0 var(--espaco-1);
+}
+
+.diaSemana {
+  font-size: var(--tamanho-p);
+  font-weight: var(--peso-forte);
+  color: var(--texto-secundario);
+}
+
+.diaSemana[data-hoje='true'] {
+  color: var(--destaque);
+}
+
+.numeroDia {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 var(--espaco-1);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: var(--tamanho-g);
+}
+
+.numeroDia:hover {
+  border-color: var(--linha-controle);
+}
+
+.numeroDia[data-hoje='true'] {
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+}
+
+.linhaDiaInteiro {
+  min-height: 28px;
+}
+
+.rotuloDiaInteiro {
+  align-self: center;
+  padding-right: var(--espaco-2);
+  font-size: var(--tamanho-p);
+  color: var(--texto-secundario);
+  text-align: right;
+}
+
+.celulaDiaInteiro {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 2px var(--espaco-2) var(--espaco-1) 0;
+  border-left: 1px solid var(--linha);
+}
+
+.celulaDiaInteiro[data-clicavel='true'] {
+  cursor: pointer;
+}
+
+.celulaDiaInteiro[data-clicavel='true']:hover {
+  background: var(--fundo-suave);
+}
+
+.corpo {
+  position: relative;
+}
+
+.horas {
+  display: flex;
+  flex-direction: column;
+}
+
+.hora {
+  height: var(--altura-hora);
+  padding-right: var(--espaco-2);
+  font-size: var(--tamanho-p);
+  line-height: 1;
+  color: var(--texto-secundario);
+  text-align: right;
+}
+
+/* O rótulo fica centrado na linha da hora. */
+.hora span {
+  display: inline-block;
+  transform: translateY(-50%);
+}
+
+.coluna {
+  position: relative;
+  min-width: 0;
+  border-left: 1px solid var(--linha);
+}
+
+.celula {
+  display: block;
+  width: 100%;
+  height: calc(var(--altura-hora) / 2);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+/* Linha da hora no fim de cada par de células de meia hora. */
+.celula:nth-child(2n) {
+  border-bottom: 1px solid var(--linha);
+}
+
+button.celula:hover {
+  background: var(--fundo-suave);
+}
+
+button.celula:focus-visible {
+  outline-offset: -2px;
+}
+
+.agora {
+  position: absolute;
+  left: -1px;
+  right: 0;
+  z-index: 2;
+  height: 2px;
+  background: var(--destaque);
+  pointer-events: none;
+}
+
+.agora::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--destaque);
+}

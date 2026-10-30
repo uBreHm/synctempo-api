@@ -1,0 +1,137 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-8);
+  width: 100%;
+  max-width: 760px;
+  padding: var(--espaco-6) var(--espaco-4) var(--espaco-8);
+}
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.secundario {
+  color: var(--texto-secundario);
+}
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding-top: var(--espaco-6);
+  border-top: 1px solid var(--linha);
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  max-width: 480px;
+}
+
+.linhaCampos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espaco-3);
+}
+
+.linhaCampos > * {
+  flex: 1 1 160px;
+}
+
+.linhaCampos > .encolher {
+  flex: none;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.status {
+  font-weight: var(--peso-forte);
+}
+
+.tabelaRolagem {
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--espaco-2) var(--espaco-3) var(--espaco-2) 0;
+  border-bottom: 1px solid var(--linha);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tabela th {
+  font-size: var(--tamanho-p);
+  font-weight: var(--peso-forte);
+  color: var(--texto-secundario);
+}
+
+.tabela select {
+  width: auto;
+}
+
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemLista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2) var(--espaco-3);
+  padding: var(--espaco-2) 0;
+  border-bottom: 1px solid var(--linha);
+}
+
+.itemLista > .crescer {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.amostraCor {
+  display: inline-block;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--linha-controle);
+  vertical-align: -2px;
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--espaco-2) var(--espaco-4);
+}
+
+.dados dt {
+  color: var(--texto-secundario);
+}
+
+.dados dd {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}

@@ -1,0 +1,33 @@
+.titulo {
+  margin-left: var(--espaco-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.visoes {
+  display: flex;
+  margin-left: auto;
+}
+
+.visoes button {
+  min-height: 36px;
+  padding: 0 var(--espaco-4);
+  border: 1px solid var(--linha-controle);
+  background: var(--fundo);
+  font-weight: var(--peso-forte);
+}
+
+.visoes button + button {
+  border-left: 0;
+}
+
+.visoes button:hover {
+  background: var(--fundo-suave);
+}
+
+.visoes button[aria-pressed='true'] {
+  border-color: var(--destaque);
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+}
